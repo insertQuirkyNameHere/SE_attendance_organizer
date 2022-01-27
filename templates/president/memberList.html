@@ -1,0 +1,31 @@
+{% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+<h1>Club Management</h1>
+<h2>Welcome {{user}}</h2>
+
+<h3>{{club}} Members</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Sl. No.</th>
+            <th>Name</th>
+            <th>Department</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for member in members%}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{member.member}}</td>
+            <td>{{member.member.dept}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+<p><a href="">Add new members</a></p>

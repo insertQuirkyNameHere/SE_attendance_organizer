@@ -2,8 +2,12 @@
 <h2>Welcome {{user}}</h2>
 
 <h3>You are a member of the following clubs</h3>
+{%if clubs%}
 <ul> 
     {%for club in clubs%}
     <li>{{club.club}}</li>
     {%endfor%}
 </ul>
+{%else%}
+<p>You are not part of any clubs yet</p>
+{%endif%}

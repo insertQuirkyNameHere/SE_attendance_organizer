@@ -1,0 +1,37 @@
+{% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+<h1>Add New Members</h1>
+<h2>Welcome {{user}}</h2>
+
+<h3>{{club}}</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Sl. No.</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for student in students%}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{student}}</td>
+            <td>{{student.dept}}</td>
+            <td>
+                <form method="post">
+                    {%csrf_token%}
+                    <input type="hidden" name="student" value="{{student.id}}">
+                    <button class="btn btn-success" type="submit">Add</button>
+                </form>
+            </td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
