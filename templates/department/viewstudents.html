@@ -1,0 +1,51 @@
+{% extends "header.html" %}
+
+{%block content%}
+<div class="container-fluid top-nav">
+    <div class="row py-5 justify-content-center">
+        <div class="col-3 text-center">
+            <a href="{% url 'dept_dash' %}"><button class="btn btn-special">Home</button></a>
+        </div>
+        <div class="col-3 text-center">
+            <a href="{% url 'attendance_requests' %}"><button class="btn btn-special">View attendance requests</button></a>
+        </div>
+        <div class="col-3 text-center">
+            <a href="{% url 'view_students' %}"><button class="btn btn-special">View Students</button></a>
+        </div>
+        <div class="col-3 text-center">
+            <a href="{% url 'logout' %}"><button class="btn btn-special">Logout</button></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt-5">
+    {% if clubs %}
+    <table class="table table-bordered" style="background-color: #fff;">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Club</th>
+            <th scope="col">Department</th>
+            <th scope="col">View Student History</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+        {% for r in clubs %}
+          <tr>
+            
+            <td scope="row">{{ r.member.user.name }}</td>
+            <td>{{ r.club.name }}</td>    
+            <td>{{ r.member.dept.name }}</td>
+            <td><a href="/department/students/{{ r.member.id }}/{{ r.club.id }}"><button class="btn btn-primary">View Student History</button></a></td>
+            
+            
+          </tr>
+          {% endfor %}
+          {% else %}
+            <p>There are no students as of now</p>
+        {% endif %}
+        </tbody>
+      </table>
+</div>  
+
+{%endblock%}

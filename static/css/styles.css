@@ -14,3 +14,15 @@ body{
     border: none;
     margin-bottom: 1em;
 }
+
+.top-nav{
+    background-color: rgb(44, 62, 80);
+    color: rgb(26, 188, 156);
+    width: 100%;
+    text-decoration: none;
+}
+
+.btn-special{
+    background-color: rgb(26, 188, 156);
+
+}

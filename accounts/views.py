@@ -53,7 +53,12 @@ class LoginView(views.View):
                 login(request, user)
                 print('login done')
                 messages.success(request, 'Login success')
-                return redirect(reverse('home'))
+                if user.is_president:
+                    return redirect(reverse("pres_dash"))
+                elif user.is_student:
+                    return redirect(reverse("stu_dash"))
+                elif user.is_dept:
+                    return redirect(reverse("dept_dash"))
             else:
                 if UserModel.objects.filter(email=email).exists():
                     messages.error(request, 'Incorrect username or password')
