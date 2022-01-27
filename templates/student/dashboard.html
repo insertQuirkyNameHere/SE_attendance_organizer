@@ -1,0 +1,9 @@
+<h1>Student Dashboard</h1>
+<h2>Welcome {{user}}</h2>
+
+<h3>You are a member of the following clubs</h3>
+<ul> 
+    {%for club in clubs%}
+    <li>{{club.club}}</li>
+    {%endfor%}
+</ul>

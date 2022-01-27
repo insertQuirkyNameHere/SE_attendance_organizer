@@ -1,0 +1,11 @@
+<h1>Requests</h1>
+<h2>Welcome {{user}}</h2>
+
+<h3>You have the following pending requests</h3>
+<ul> 
+    {%for club in clubs%}
+    <li>{{club.club}}</li>
+    {%endfor%}
+</ul>
+
+<h3>Your request history</h3>

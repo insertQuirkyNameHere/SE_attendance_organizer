@@ -21,22 +21,22 @@ class RegisterView(views.View):
             user = form.save()
             role = form['role'].value()
             print(role)
-            messages.success(request, "Registration successful." )
-            return redirect("register")
+            messages.success(request, 'Registration successful.' )
+            return redirect('register')
         else:
             email   = form['email'].value()
             password1 = form['password'].value()
             password2 = form['password2'].value()
             
             if UserModel.objects.filter(email=email).exists():
-                messages.error(request,"Email address is already taken. Try again with a new one!")
+                messages.error(request,'Email address is already taken. Try again with a new one!')
                 
             if password1 and password2 and password1 != password2:
-                messages.error(request,"Passwords don't match")
+                messages.error(request,'Passwords don\'t match')
 
         
-        messages.error(request, "Unsuccessful registration.")
-        return redirect("register")
+        messages.error(request, 'Unsuccessful registration.')
+        return redirect('register')
 
 class LoginView(views.View):
     def get(self,request):
