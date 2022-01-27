@@ -1,76 +1,94 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-# Create your models here.
+from django.contrib.auth.models import (
+    BaseUserManager, AbstractBaseUser
+)
+from django.utils import timezone
 
-class CustomUserManager(BaseUserManager):
-    def create_pres(self, email, password):
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None):
+        """
+        Creates and saves a User with the given email and password.
+        """
         if not email:
-            raise ValueError('Email needs to be specified for creating an account')
+            raise ValueError('Users must have an email address')
 
-        user_obj = self.model (
-            email   = self.normalize_email(email)
-            is_pres = True
-            is_stu  = False
-        )
-            
-
-        user_obj.set_password(password)
-        user_obj.save()
-        return user_obj
-
-    def create_dept(self, email, password):
-        if not email:
-            raise ValueError('Email needs to specified for creating an account')
-
-        user_obj = self.model(
-            email = self.normalize_email(email)
-            is_dept = True
-            is_stu = False
+        user = self.model(
+            email=self.normalize_email(email),
         )
 
-        user_obj.set_password(password)
-        user_obj.save()
-        return user_obj
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-    def create_stu(self, email, password):
-        if not email:
-            raise ValueError('Email needs to specified for creating an account')
-
-        user_obj = self.model(
-            email = self.normalize_email(email)
+    def create_staffuser(self, email, password):
+        """
+        Creates and saves a staff user with the given email and password.
+        """
+        user = self.create_user(
+            email,
+            password=password,
         )
+        user.is_staff = True
+        user.save(using=self._db)
+        return user
 
-        user_obj.set_password(password)
-        user_obj.save()
-        return user_obj
-
-    def create_faculty(self, email, password):
-        if not email:
-            raise ValueError('Email needs to specified for creating an account')
-
-        user_obj = self.model(
-            email = self.normalize_email(email)
-            is_stu = False
-            is_faculty = True
+    def create_superuser(self, email, password):
+        """
+        Creates and saves a superuser with the given email and password.
+        """
+        user = self.create_user(
+            email,
+            password=password,
         )
+        user.is_staff = True
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
 
-        user_obj.set_password(password)
-        user_obj.save()
-        return user_obj
+class User(AbstractBaseUser):
+    email = models.EmailField(
+        verbose_name='email address',
+        max_length=255,
+        unique=True,
+    )
+    name = models.CharField(max_length=255)
+
+    is_student = models.BooleanField(default=True)
+    is_dept = models.BooleanField(default=False)
+    is_president = models.BooleanField(default=False)
+    is_faculty = models.BooleanField(default=False) 
+
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False) # a admin user; non super-user
+    is_admin = models.BooleanField(default=False) # a superuser
 
 
-class CustomUser (AbstractBaseUser):
-    email       = models.EmailField(max_length=256, unique=True)
-    active      = models.BooleanField(default=True)
-    admin       = models.BooleanField(default=False)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = [] # Email & Password are required by default.
 
-    is_faculty  = models.BooleanField(default=False)
-    is_pres     = models.BooleanField(default=False)
-    is_dept     = models.BooleanField(default=False)
-    is_stu      = models.BooleanField(default=True)
+    def get_full_name(self):
+        # The user is identified by their email address
+        return self.email
 
-    USERNAME_FIELD  = 'email'
-    objects         = CustomUserManager()
+    def get_short_name(self):
+        # The user is identified by their email address
+        return self.email
 
     def __str__(self):
         return self.email
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
+
+    """@property
+    def is_staff(self):
+        return self.staff
+
+    @property
+    def is_admin(self):
+        return self.admin"""
+
+    objects = UserManager()
