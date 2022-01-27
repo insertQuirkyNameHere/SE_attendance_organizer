@@ -1,0 +1,24 @@
+<h1>President Dashboard</h1>
+<h2>Welcome {{user}}</h2>
+
+<h3>You are a leader of the following clubs</h3>
+{%if leadClubs%}
+<ul>
+    {%for club in leadClubs%}
+    <li>{{club.name}}</li>
+    {%endfor%}
+</ul>
+{%else%}
+<p>You have not registered your club yet. <a href="">Register</a></p>
+{%endif%}
+
+<h3>You are a member of the following clubs</h3>
+{%if clubs%}
+<ul> 
+    {%for club in clubs%}
+    <li>{{club.club}}</li>
+    {%endfor%}
+</ul>
+{%else%}
+<p>You are not a member of any club yet</a></p>
+{%endif%}

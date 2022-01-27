@@ -19,7 +19,7 @@ class Clubs(models.Model):
 
 class Students(models.Model):
     user = models.OneToOneField(user_model, on_delete=models.CASCADE)
-    dept = models.OneToOneField(Departments, on_delete=models.CASCADE)
+    dept = models.ForeignKey(Departments, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user

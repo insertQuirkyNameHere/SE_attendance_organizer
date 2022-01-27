@@ -8,7 +8,6 @@ class Dashboard(View):
         curr_user = request.user
         curr_stu_obj = Students.objects.get(user=curr_user)
         club_membership_records = ClubMemberships.objects.filter(member = curr_stu_obj)
-        print(curr_user)
         context = {}
         context['user'] = curr_user
         context['clubs'] = club_membership_records
