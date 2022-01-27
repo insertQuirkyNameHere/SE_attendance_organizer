@@ -22,7 +22,7 @@ class Students(models.Model):
     dept = models.ForeignKey(Departments, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user
+        return self.user.name
 
 class ClubMemberships(models.Model):
     member = models.ForeignKey(Students, on_delete=models.CASCADE, unique=False)
