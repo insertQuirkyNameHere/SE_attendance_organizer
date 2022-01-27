@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 # Create your models here.
 user_model = get_user_model()
@@ -30,11 +31,11 @@ class ClubMemberships(models.Model):
 class PendingRequests(models.Model):
     student = models.ForeignKey(Students, on_delete=models.CASCADE)
     club = models.ForeignKey(Clubs, on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateField(default=timezone.now)
 
 class Requests(models.Model):
     student = models.ForeignKey(Students, on_delete=models.CASCADE)
     club = models.ForeignKey(Clubs, on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateField(default=timezone.now)
     approval = models.BooleanField()
 

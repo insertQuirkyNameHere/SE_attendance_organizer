@@ -2,10 +2,57 @@
 <h2>Welcome {{user}}</h2>
 
 <h3>You have the following pending requests</h3>
-<ul> 
-    {%for club in clubs%}
-    <li>{{club.club}}</li>
-    {%endfor%}
-</ul>
+{%if pending_requests%}
+<table>
+    <thead>
+        <tr>
+            <th>Sl No.</th>
+            <th>Club</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for request in pending_requests%}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{request.club}}</td>
+            <td>{{request.date}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+{%else%}
+<p>You have no pending requests at this time</p>
+{%endif%}
 
 <h3>Your request history</h3>
+{%if requests%}
+<table>
+    <thead>
+        <tr>
+            <th>Sl No.</th>
+            <th>Club</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for request in requests%}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{request.club}}</td>
+            <td>{{request.date}}</td>
+            <td>
+                {%if request.approval%}
+                Accepted
+                {%else%}
+                Rejected
+                {%endif%}
+            </td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+{%else%}
+<p>You have no request history at this time</p>
+{%endif%}
