@@ -5,7 +5,7 @@
 {%if leadClubs%}
 <ul>
     {%for club in leadClubs%}
-    <li>{{club.name}}</li>
+    <li><a href="{%url 'club_view' club.id%}">{{club.name}}</a></li>
     {%endfor%}
 </ul>
 {%else%}

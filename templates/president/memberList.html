@@ -9,23 +9,26 @@
 <h2>Welcome {{user}}</h2>
 
 <h3>{{club}} Members</h3>
+
 <table>
     <thead>
         <tr>
             <th>Sl. No.</th>
             <th>Name</th>
             <th>Department</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         {%for member in members%}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{member.member}}</td>
-            <td>{{member.member.dept}}</td>
-        </tr>
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{member.member}}</td>
+                <td>{{member.member.dept}}</td>
+                <td><a href="{%url 'manage_members' club.id member.member.id%}">Manage</a></td>
+            </tr>
         {%endfor%}
     </tbody>
 </table>
 
-<p><a href="">Add new members</a></p>
+<p><a href="{%url 'add_members' club.id%}">Add new members</a></p>
