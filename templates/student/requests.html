@@ -1,4 +1,19 @@
+{% extends 'header.html' %}
 
+{% block content %}
+<div class="container-fluid top-nav">
+    <div class="row py-5 justify-content-center">
+        <div class="col-3 text-center">
+            <a href="{% url 'stu_dash' %}"><button class="btn btn-special">Home</button></a>
+        </div>
+        <div class="col-3 text-center">
+            <a href="{% url 'stu_requests' %}"><button class="btn btn-special">View Attendance Requests</button></a>
+        </div>
+        <div class="col-3 text-center">
+            <a href="{% url 'logout' %}"><button class="btn btn-special">Logout</button></a>
+        </div>
+    </div>
+</div>
 {% if messages %}
 <ul class="messages">
 {% for message in messages %}
@@ -10,8 +25,9 @@
 
 <h3>You have the following pending requests</h3>
 {%if pending_requests%}
-<table>
-    <thead>
+<div class="container-fluid mt-5">
+<table class="table table-bordered" style="background-color: #fff;">
+    <thead class="thead-dark">
         <tr>
             <th>Sl No.</th>
             <th>Club</th>
@@ -28,14 +44,16 @@
         {%endfor%}
     </tbody>
 </table>
+</div>
 {%else%}
 <p>You have no pending requests at this time</p>
 {%endif%}
 
 <h3>Your request history</h3>
 {%if requests%}
-<table>
-    <thead>
+<div class="container-fluid mt-5">
+<table class="table table-bordered" style="background-color: #fff;">
+    <thead class="thead-dark">
         <tr>
             <th>Sl No.</th>
             <th>Club</th>
@@ -60,6 +78,8 @@
         {%endfor%}
     </tbody>
 </table>
+</div>
 {%else%}
 <p>You have no request history at this time</p>
 {%endif%}
+{% endblock %}
