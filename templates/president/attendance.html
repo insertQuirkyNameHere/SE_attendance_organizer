@@ -1,0 +1,58 @@
+<h1>Attendance View</h1>
+<h2>Welcome {{user}}</h2>
+
+<h3>Details of {{member}}</h3>
+
+<h4>Pending Requests</h4>
+{%if pending_requests%}
+<table class="table table-bordered" style="background-color: #fff;">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for request in pending_requests%}
+        <tr>
+            <td>{{request.student}}</td>
+            <td>{{request.student.dept}}</td>
+            <td>{{request.date}}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <p>There are no pending requests for {{member}} at this time</p>
+        {% endif %}
+    </tbody>
+</table>
+
+<h4>Requests History</h4>
+{%if requests%}
+<table class="table table-bordered" style="background-color: #fff;">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for request in requests%}
+        <tr>
+            <td>{{request.student}}</td>
+            <td>{{request.student.dept}}</td>
+            <td>{{request.date}}</td>
+            {%if request.approval%}
+            <td>Approved</td>
+            {%else%}
+            <td>Rejected</td>
+            {%endif%}
+        </tr>
+        {% endfor %}
+        {% else %}
+        <p>There have been no attendance requests for {{member}} yet</p>
+        {% endif %}
+    </tbody>
+</table>

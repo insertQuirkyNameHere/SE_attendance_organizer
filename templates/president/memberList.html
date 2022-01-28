@@ -17,6 +17,7 @@
             <th>Name</th>
             <th>Department</th>
             <th>Action</th>
+            <th>Attendance</th>
         </tr>
     </thead>
     <tbody>
@@ -26,6 +27,7 @@
                 <td>{{member.member}}</td>
                 <td>{{member.member.dept}}</td>
                 <td><a href="{%url 'manage_members' club.id member.member.id%}">Manage</a></td>
+                <td><a href="{%url 'members_attendance' club.id member.member.id%}">View</a></td>
             </tr>
         {%endfor%}
     </tbody>

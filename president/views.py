@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.views import View
-from models.models import ClubMemberships, PendingRequests, Students, Clubs
+from models.models import ClubMemberships, PendingRequests, Requests, Students, Clubs
 from student.forms import StudentCreationForm
 from .forms import ClubCreationForm
 # Create your views here.
@@ -119,4 +119,21 @@ class ManageMembers(View):
             messages.info(request, 'Attendance requested successfully!')
             return redirect(reverse('club_view', args=(clubId, )))
         return redirect(reverse('club_view', args=(clubId, )))
+    
+class AttendanceView(View):
+    def get(self, request, clubId, memberId):
+        curr_user = request.user
+        club_obj = Clubs.objects.get(id=clubId)
+        student_obj = Students.objects.get(id=memberId)
+        pending_requests = PendingRequests.objects.filter(student=student_obj, club=club_obj)
+        requests = Requests.objects.filter(student=student_obj, club=club_obj)
+        print(requests)
+        context = {}
+        context['user'] = curr_user
+        context['club'] = club_obj
+        context['member'] = student_obj
+        context['pending_requests'] = pending_requests
+        context['requests'] = requests
+        return render(request, 'president/attendance.html', context)
+
 
