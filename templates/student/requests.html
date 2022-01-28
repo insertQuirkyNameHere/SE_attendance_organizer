@@ -3,9 +3,15 @@
 {% block content %}
 <div class="container-fluid top-nav">
     <div class="row py-5 justify-content-center">
+        {% if user.is_president %}
+        <div class="col-3 text-center">
+            <a href="{% url 'pres_dash' %}"><button class="btn btn-special">Home</button></a>
+        </div>
+        {% else %}
         <div class="col-3 text-center">
             <a href="{% url 'stu_dash' %}"><button class="btn btn-special">Home</button></a>
         </div>
+        {% endif %}
         <div class="col-3 text-center">
             <a href="{% url 'stu_requests' %}"><button class="btn btn-special">View Attendance Requests</button></a>
         </div>
