@@ -1,15 +1,30 @@
-from importlib.resources import contents
 from django.urls import reverse
+from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.views import View
-from matplotlib.style import context
 from models.models import ClubMemberships, PendingRequests, Students, Clubs
-from django.contrib import messages
+from student.forms import StudentCreationForm
+from .forms import ClubCreationForm
 # Create your views here.
 
 class Dashboard(View):
     def get(self, request):
         curr_user = request.user
+
+        if not Students.objects.filter(user=curr_user).exists():
+            form = StudentCreationForm()
+            context = {}
+            context['user'] = curr_user
+            context['form'] = form
+            return render(request, 'student/enterDetails.html', context)
+
+        if not Clubs.objects.filter(president=curr_user).exists():
+            form = ClubCreationForm()
+            context = {}
+            context['user'] = curr_user
+            context['form'] = form
+            return render(request, 'president/enterClubDetails.html', context)
+
         curr_stu_obj = Students.objects.get(user=curr_user)
         club_leadership_records = Clubs.objects.filter(president=curr_user)
         club_membership_records = ClubMemberships.objects.filter(member=curr_stu_obj)
@@ -18,6 +33,24 @@ class Dashboard(View):
         context['leadClubs'] = club_leadership_records
         context['clubs'] = club_membership_records
         return render(request, 'president/dashboard.html', context)
+
+    def post(self, request):
+        curr_user = request.user
+        if not Students.objects.filter(user=curr_user).exists():
+            form = StudentCreationForm(request.POST)
+            student_instance = form.save(commit=False)
+            student_instance.user = curr_user
+            student_instance.save()
+            messages.success(request, 'Student details entered successfully!')
+            return redirect(reverse('pres_dash'))
+
+        elif not Clubs.objects.filter(president=curr_user).exists():
+            form = ClubCreationForm(request.POST)
+            club_instance = form.save(commit=False)
+            club_instance.president = curr_user
+            club_instance.save()
+            messages.success(request, 'Club details entered successfully!')
+            return redirect(reverse('pres_dash'))
 
 class ViewMembers(View):
     def get(self, request, clubId):

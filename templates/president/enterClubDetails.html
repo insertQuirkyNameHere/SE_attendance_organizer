@@ -1,0 +1,19 @@
+<h1>Enter Club Details</h1>
+<h2>Welcome {{user}}</h2>
+
+<p>
+    You were redirected here because your club details are not in the system yet.
+    Please enter the required details
+</p>
+
+<form method="post">
+    {%csrf_token%}
+    {%for field in form%}
+    <div class="fieldWrapper">
+        {{field.label}}
+        {{field}}
+    </div>
+    {%endfor%}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
