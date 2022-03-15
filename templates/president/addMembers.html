@@ -1,53 +1,47 @@
-{% extends 'header.html' %}
+{% extends '../base.html' %}
+{%block title%}Attendance Organizer| Dashboard {%endblock%}
+{%block navLinks%}
+<a class="navLink" href="{% url 'pres_dash' %}">
+    <li>Home</li>
+</a>
+<a class="navLink" href="{% url 'personal_attendance' %}">
+    <li>View Attendance Requests</li>
+</a>
+<a class="navLink" href="{%url 'logout'%}">
+    <li>Logout</li>
+</a>
+{%endblock%}
 
 {% block content %}
-<div class="container-fluid top-nav">
-    <div class="row py-5 justify-content-center">
-        <div class="col-3 text-center">
-            <a href="{% url 'pres_dash' %}"><button class="btn btn-special">Home</button></a>
-        </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'logout' %}"><button class="btn btn-special">Logout</button></a>
-        </div>
-    </div>
-</div>
-{% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
-<h1>Add New Members</h1>
-<h2>Welcome {{user}}</h2>
+<section>
+    <h2>Add New Members</h2>
 
-<h3>{{club}}</h3>
-<div class="container-fluid mt-4">
-<table class="table table-bordered" style="background-color: #fff;">
-    <thead class="thead-dark">
-        <tr>
-            <th>Sl. No.</th>
-            <th>Name</th>
-            <th>Department</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {%for student in students%}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{student}}</td>
-            <td>{{student.dept}}</td>
-            <td>
-                <form method="post">
-                    {%csrf_token%}
-                    <input type="hidden" name="student" value="{{student.id}}">
-                    <button class="btn btn-success" type="submit">Add</button>
-                </form>
-            </td>
-        </tr>
-        {%endfor%}
-    </tbody>
-</table>
-</div>
+    <h3>{{club}}</h3>
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Sl. No.</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for student in students%}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{student}}</td>
+                <td>{{student.dept}}</td>
+                <td>
+                    <form method="post">
+                        {%csrf_token%}
+                        <input type="hidden" name="student" value="{{student.id}}">
+                        <button class="btn btn-success" type="submit">Add</button>
+                    </form>
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</section>
 {% endblock %}

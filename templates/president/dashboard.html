@@ -1,48 +1,43 @@
-{% extends 'header.html' %}
+{% extends '../base.html' %}
+{%block title%}Attendance Organizer| Dashboard {%endblock%}
+{%block navLinks%}
+<a class="navLink" href="{% url 'pres_dash' %}">
+    <li>Home</li>
+</a>
+<a class="navLink" href="{% url 'personal_attendance' %}">
+    <li>View Attendance Requests</li>
+</a>
+<a class="navLink" href="{%url 'logout'%}">
+    <li>Logout</li>
+</a>
+{%endblock%}
+
 
 {% block content %}
-<div class="container-fluid top-nav">
-    <div class="row py-5 justify-content-center">
-        <div class="col-3 text-center">
-            <a href="{% url 'pres_dash' %}"><button class="btn btn-special">Home</button></a>
-        </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'personal_attendance' %}"><button class="btn btn-special">View Personal Attendance</button></a>
-        </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'logout' %}"><button class="btn btn-special">Logout</button></a>
-        </div>
-    </div>
-</div>
-{% if messages %}
-<ul class="messages">
-{% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-{% endfor %}
-</ul>
-{% endif %}
-<h1>President Dashboard</h1>
-<h2>Welcome {{user}}</h2>
 
-<h3>You are a leader of the following clubs</h3>
-{%if leadClubs%}
-<ul>
-    {%for club in leadClubs%}
-    <li><a href="{%url 'club_view' club.id%}"><button class="btn btn-primary">{{club.name}}</button></a></li>
-    {%endfor%}
-</ul>
-{%else%}
-<p>You have not registered your club yet. <a href="">Register</a></p>
-{%endif%}
-
-<h3>You are a member of the following clubs</h3>
-{%if clubs%}
-<ul> 
-    {%for club in clubs%}
-    <li>{{club.club}}</li>
-    {%endfor%}
-</ul>
-{%else%}
-<p>You are not a member of any club yet</a></p>
-{%endif%}
+<h2>President Dashboard</h2>
+<section>
+    <h3>You are a leader in the following clubs</h3>
+    {%if leadClubs%}
+    <ul>
+        {%for club in leadClubs%}
+        <li><a href="{%url 'club_view' club.id%}">{{club.name}}</a></li>
+        {%endfor%}
+    </ul>
+    {%else%}
+    <p>You have not registered your club yet. <a href="">Register</a></p>
+    {%endif%}
+</section>
+<section>
+    <h3>You are a member of the following clubs</h3>
+    {%if clubs%}
+    <ul>
+        {%for club in clubs%}
+        <li>{{club.club}}</li>
+        {%endfor%}
+    </ul>
+    {%else%}
+    <p>You are not a member of any club yet</a></p>
+    {%endif%}
+</section>
 {% endblock %}

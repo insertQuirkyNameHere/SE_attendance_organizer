@@ -1,15 +1,8 @@
-{% extends 'header.html' %}
+{% extends '../base.html' %}
+{%block title%}Attendance Organizer|Personal Details {%endblock%}
 
 {% block content %}
-{% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
-<h1>Enter Details</h1>
-<h2>Welcome {{user}}</h2>
+<h2>Enter Details</h2>
 
 <p>
     You were redirected here because your details are not in the system yet.

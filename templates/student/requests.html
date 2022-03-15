@@ -1,91 +1,81 @@
-{% extends 'header.html' %}
+{% extends '../base.html' %}
+
+{%block navLinks%}
+{% if user.is_student %}
+<a class="navLink" href="{%url 'stu_dash'%}">
+    <li>Home</li>
+</a>
+{% else %}
+<a class="navLink" href="{% url 'pres_dash' %}">
+    <li>Home</li>
+</a>
+{%endif%}
+<a class="navLink" href="{%url 'stu_requests'%}">
+    <li>View Attendance Requests</li>
+</a>
+<a class="navLink" href="{%url 'logout'%}">
+    <li>Logout</li>
+</a>
+{%endblock%}
 
 {% block content %}
-<div class="container-fluid top-nav">
-    <div class="row py-5 justify-content-center">
-        {% if user.is_president %}
-        <div class="col-3 text-center">
-            <a href="{% url 'pres_dash' %}"><button class="btn btn-special">Home</button></a>
-        </div>
-        {% else %}
-        <div class="col-3 text-center">
-            <a href="{% url 'stu_dash' %}"><button class="btn btn-special">Home</button></a>
-        </div>
-        {% endif %}
-        <div class="col-3 text-center">
-            <a href="{% url 'stu_requests' %}"><button class="btn btn-special">View Attendance Requests</button></a>
-        </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'logout' %}"><button class="btn btn-special">Logout</button></a>
-        </div>
-    </div>
-</div>
-{% if messages %}
-<ul class="messages">
-{% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-{% endfor %}
-</ul>
-{% endif %}<h1>Requests</h1>
-<h2>Welcome {{user}}</h2>
-
-<h3>You have the following pending requests</h3>
-{%if pending_requests%}
-<div class="container-fluid mt-5">
-<table class="table table-bordered" style="background-color: #fff;">
-    <thead class="thead-dark">
-        <tr>
-            <th>Sl No.</th>
-            <th>Club</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        {%for request in pending_requests%}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{request.club}}</td>
-            <td>{{request.date}}</td>
-        </tr>
-        {%endfor%}
-    </tbody>
-</table>
-</div>
-{%else%}
-<p>You have no pending requests at this time</p>
-{%endif%}
-
-<h3>Your request history</h3>
-{%if requests%}
-<div class="container-fluid mt-5">
-<table class="table table-bordered" style="background-color: #fff;">
-    <thead class="thead-dark">
-        <tr>
-            <th>Sl No.</th>
-            <th>Club</th>
-            <th>Date</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        {%for request in requests%}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{request.club}}</td>
-            <td>{{request.date}}</td>
-            <td>
-                {%if request.approval%}
-                Accepted
-                {%else%}
-                Rejected
-                {%endif%}
-            </td>
-        </tr>
-        {%endfor%}
-    </tbody>
-</table>
-</div>
-{%else%}
-<p>You have no request history at this time</p>
-{%endif%}
+<section>
+    <h1>Requests</h1>
+    <h3>You have the following pending requests</h3>
+    {%if pending_requests%}
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Sl No.</th>
+                <th>Club</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for request in pending_requests%}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{request.club}}</td>
+                <td>{{request.date}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    {%else%}
+    <p>You have no pending requests at this time</p>
+    {%endif%}
+    </section>
+    <section>
+    <h3>Your request history</h3>
+    {%if requests%}
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Sl No.</th>
+                <th>Club</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for request in requests%}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{request.club}}</td>
+                <td>{{request.date}}</td>
+                <td>
+                    {%if request.approval%}
+                    Accepted
+                    {%else%}
+                    Rejected
+                    {%endif%}
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    {%else%}
+    <p>You have no request history at this time</p>
+    {%endif%}
+</section>
 {% endblock %}

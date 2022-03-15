@@ -1,38 +1,37 @@
-{% extends 'header.html' %}
+{% extends '../base.html' %}
+{%block title%}Attendance Organizer| Dashboard {%endblock%}
+{%block navLinks%}
+<a class="navLink" href="{% url 'pres_dash' %}">
+    <li>Home</li>
+</a>
+<a class="navLink" href="{% url 'personal_attendance' %}">
+    <li>View Attendance Requests</li>
+</a>
+<a class="navLink" href="{%url 'logout'%}">
+    <li>Logout</li>
+</a>
+{%endblock%}
 
 {% block content %}
-<div class="container-fluid top-nav">
-    <div class="row py-5 justify-content-center">
-        <div class="col-3 text-center">
-            <a href="{% url 'pres_dash' %}"><button class="btn btn-special">Home</button></a>
-        </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'logout' %}"><button class="btn btn-special">Logout</button></a>
-        </div>
-    </div>
-</div>
-{% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
-<h1>Manage Members- {{member.member}}</h1>
-<h2>Welcome {{user}}</h2>
+<section>
+    <h2>Manage Members- {{member.member}}</h2>
 
-<h3>{{club}}</h3>
+    <h3>{{club}}</h3>
 
-<form method="post">
-    <h3>Delete member</h3>
-    {%csrf_token%}
-    <button type="submit" class="btn btn-danger ml-4" name="del">Delete Member</button>
-</form>
+    <section>
+    <form method="post">
+        <h3 style="display: inline-block;">Delete member:</h3>
+        {%csrf_token%}
+        <button type="submit" class="btn btn-danger ml-4" name="del" style="display: inline-block;">Delete Member</button>
+    </form>
+    </section>
 
-<form method="post">
-    <h3>Request Attendance</h3>
-    {%csrf_token%}
-    <input type="date" name="date" class="ml-4">
-    <button type="submit" class="btn btn-success" name="req_att">Request</button>
-</form>
+    <section>
+        <h3>Request Attendance</h3>
+        {%csrf_token%}
+        <input type="date" name="date" class="ml-4">
+        <button type="submit" class="btn btn-success" name="req_att">Request</button>
+    </form>
+    </section>
+</section>
 {% endblock %}

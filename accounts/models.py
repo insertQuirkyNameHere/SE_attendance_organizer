@@ -83,6 +83,20 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+    @property
+    def get_role(self):
+        if (self.is_student):
+            return 'Student'
+
+        elif(self.is_dept):
+            return 'Department Staff'
+
+        elif (self.is_faculty):
+            return 'Faculty'
+
+        else:
+            return 'President'
+
     """@property
     def is_staff(self):
         return self.staff
