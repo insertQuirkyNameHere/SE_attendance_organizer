@@ -1,0 +1,30 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+h1{
+    padding: 15px;
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+
+label{
+    margin-bottom: 1px;
+}
+
+input{
+    border-radius: 6px;
+}
+
+.fieldWrapper{
+    margin: 20px;
+}
+
+.center-text{
+    text-align: center;
+}

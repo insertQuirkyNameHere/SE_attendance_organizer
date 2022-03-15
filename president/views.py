@@ -46,9 +46,12 @@ class Dashboard(View):
 
         elif not Clubs.objects.filter(president=curr_user).exists():
             form = ClubCreationForm(request.POST)
+            student_obj = Students.objects.get(user=curr_user)
             club_instance = form.save(commit=False)
             club_instance.president = curr_user
             club_instance.save()
+            club_membership_obj = ClubMemberships(member=student_obj, club=club_instance)
+            club_membership_obj.save()
             messages.success(request, 'Club details entered successfully!')
             return redirect(reverse('pres_dash'))
 

@@ -41,7 +41,7 @@ class RegisterView(views.View):
 class LoginView(views.View):
     def get(self,request):
         form = forms.LoginForm
-        return render(request, 'login.html', {'form':form})
+        return render(request, 'landing.html', {'form':form})
 
     def post(self, request):
         form = forms.LoginForm(request.POST)
@@ -64,14 +64,43 @@ class LoginView(views.View):
                     messages.error(request, 'Incorrect username or password')
                 else:
                     messages.error(request, 'This user does not exist. Please register')   
-                return(render(request, 'login.html', {'form':form}))
+                return(render(request, 'landing.html', {'form':form}))
         else:
             messages.error(request, 'email did not pass validation')
-            return render(request, 'login.html', {'form': form})
+            return render(request, 'landing.html', {'form': form})
 
 def logout_view(request):
     logout(request)
     return(redirect(reverse('home')))
 
-def home(request):
-    return render(request, 'home.html')
+class LandingPage(views.View):
+    def get(self, request):
+        form = forms.LoginForm
+        return render(request, 'landing.html', {"form":form})
+
+    def post(self, request):
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            email   = form.cleaned_data['email']
+            pwd     = form.cleaned_data['password']
+            user = authenticate(username=email, password=pwd)
+            if user is not None:
+                login(request, user)
+                print('login done')
+                messages.success(request, 'Login success')
+                if user.is_president:
+                    return redirect(reverse("pres_dash"))
+                elif user.is_student:
+                    return redirect(reverse("stu_dash"))
+                elif user.is_dept:
+                    return redirect(reverse("dept_dash"))
+            else:
+                if UserModel.objects.filter(email=email).exists():
+                    messages.error(request, 'Incorrect username or password')
+                else:
+                    messages.error(request, 'This user does not exist. Please register')   
+                return(render(request, 'landing.html', {'form':form}))
+        else:
+            messages.error(request, 'email did not pass validation')
+            return render(request, 'landing.html', {'form': form})
+

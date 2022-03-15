@@ -1,12 +1,7 @@
-We need to check if a Students table entry exists and enter relevant details
-    if they do not every time a student or president logs in
-
 Should implement proper access limits (student must not be able to access
     president, faculty, etc)
 
 President is referred to by userId instead of student Id atm
 
-Check if club president's club exists every time a president logs in. If not
-    redirect to club creation page
 
 
