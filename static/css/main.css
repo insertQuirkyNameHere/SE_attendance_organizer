@@ -41,9 +41,17 @@ input{
     border-radius: 6px;
 }
 
+table{
+    text-align: center;
+}
+
 .navLinks-container{
-    display: grid;
-    grid-template-columns: auto auto auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navLink{
+    flex-grow: 1;
 }
 
 .navLinks-container li{
@@ -91,6 +99,10 @@ input{
 
 .messages li.info{
     background-color: #17a2b8;
+}
+
+.content-section{
+    margin-top: 20px;
 }
 
 .fieldWrapper{

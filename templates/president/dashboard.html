@@ -1,4 +1,7 @@
 {% extends '../base.html' %}
+{%block intStylesheets%}
+<link href="/static/css/dashboard.css" rel="stylesheet" type="text/css">
+{%endblock%}
 {%block title%}Attendance Organizer| Dashboard {%endblock%}
 {%block navLinks%}
 <a class="navLink" href="{% url 'pres_dash' %}">
@@ -14,30 +17,39 @@
 
 
 {% block content %}
+<section>
+    <h2>President Dashboard</h2>
+    <div class="dashboard-section">
+        <div class="img-part">
+            <img src="/static/img/dashboard_img.png" alt="dashboard-icon">
+        </div>
 
-<h2>President Dashboard</h2>
-<section>
-    <h3>You are a leader in the following clubs</h3>
-    {%if leadClubs%}
-    <ul>
-        {%for club in leadClubs%}
-        <li><a href="{%url 'club_view' club.id%}">{{club.name}}</a></li>
-        {%endfor%}
-    </ul>
-    {%else%}
-    <p>You have not registered your club yet. <a href="">Register</a></p>
-    {%endif%}
-</section>
-<section>
-    <h3>You are a member of the following clubs</h3>
-    {%if clubs%}
-    <ul>
-        {%for club in clubs%}
-        <li>{{club.club}}</li>
-        {%endfor%}
-    </ul>
-    {%else%}
-    <p>You are not a member of any club yet</a></p>
-    {%endif%}
+        <div class="content-part">
+            <div class="content-section">
+            <h3>You are a leader in the following clubs</h3>
+            {%if leadClubs%}
+            <ul>
+                {%for club in leadClubs%}
+                <li><a href="{%url 'club_view' club.id%}">{{club.name}}</a></li>
+                {%endfor%}
+            </ul>
+            {%else%}
+            <p>You have not registered your club yet. <a href="">Register</a></p>
+            {%endif%}
+            </div>
+            <div class="content-section">
+            <h3>You are a member of the following clubs</h3>
+            {%if clubs%}
+            <ul>
+                {%for club in clubs%}
+                <li>{{club.club}}</li>
+                {%endfor%}
+            </ul>
+            {%else%}
+            <p>You are not a member of any club yet</a></p>
+            {%endif%}
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}

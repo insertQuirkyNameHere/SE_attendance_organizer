@@ -1,63 +1,57 @@
-{% extends "header.html" %}
-
+{% extends '../base.html' %}
+{%block intStylesheets%}
+<link href="/static/css/dashboard.css" rel="stylesheet" type="text/css">
+{%endblock%}
+{%block title%}Attendance Organizer| Dashboard {%endblock%}
+{%block navLinks%}
+<a class="navLink" href="{% url 'dept_dash' %}">
+    <li>Home</li>
+</a>
+<a class="navLink" href="{% url 'attendance_requests' %}">
+    <li>View Attendance Requests</li>
+</a>
+<a class="navLink" href="{% url 'view_students' %}">
+    <li>View Students</li>
+</a>
+<a class="navLink" href="{%url 'logout'%}">
+    <li>Logout</li>
+</a>
+{%endblock%}
 {%block content%}
-{% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
-<div class="container-fluid top-nav">
-    <div class="row py-5 justify-content-center">
-        <div class="col-3 text-center">
-            <a href="{% url 'dept_dash' %}"><button class="btn btn-special">Home</button></a>
-        </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'attendance_requests' %}"><button class="btn btn-special">View attendance requests</button></a>
-        </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'view_students' %}"><button class="btn btn-special">View Students</button></a>
-        </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'logout' %}"><button class="btn btn-special">Logout</button></a>
-        </div>
-    </div>
-</div>
-<div class="container-fluid mt-5">
+<section>
     {% if req %}
-    <table class="table table-bordered" style="background-color: #fff;">
+    <table class="table table-bordered table-hover table-striped">
         <thead class="thead-dark">
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Club</th>
-            <th scope="col">Date</th>
-            <th scope="col">Accept/Reject</th>
-          </tr>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Club</th>
+                <th scope="col">Date</th>
+                <th scope="col">Accept/Reject</th>
+            </tr>
         </thead>
         <tbody>
-        
-        {% for r in req %}
-          <tr>
-            
-            <td scope="row">{{ r.student.user.name }}</td>
-            <td>{{ r.club.name }}</td>    
-            <td>{{ r.date }}</td>
-            <td><form method="POST" action="approval/{{ r.id }}">
-                {% csrf_token %}
-                <button type="submit" name="action" value="accept">Accept</button>
-                <button type="submit" name="action" value="reject">Reject</button>
-                </form>
-            </td>
-            
-            
-          </tr>
-          {% endfor %}
-          {% else %}
-            <p>There are no attendance requests as of now</p>
-        {% endif %}
-        </tbody>
-      </table>
-</div>  
 
+            {% for r in req %}
+            <tr>
+
+                <td scope="row">{{ r.student.user.name }}</td>
+                <td>{{ r.club.name }}</td>
+                <td>{{ r.date }}</td>
+                <td>
+                    <form method="POST" action="approval/{{ r.id }}">
+                        {% csrf_token %}
+                        <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
+                        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+                    </form>
+                </td>
+
+
+            </tr>
+            {% endfor %}
+            {% else %}
+            <p>There are no attendance requests as of now</p>
+            {% endif %}
+        </tbody>
+    </table>
+</section>
 {%endblock%}

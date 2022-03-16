@@ -1,26 +1,41 @@
-{% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
-<h1>Enter Details</h1>
-<h2>Welcome {{user}}</h2>
+{% extends '../base.html' %}
+{%block intStylesheets%}
+<link href="/static/css/dashboard.css" rel="stylesheet" type="text/css">
+{%endblock%}
+{%block title%}Attendance Organizer| Dashboard {%endblock%}
+{%block navLinks%}
+<a class="navLink" href="{% url 'dept_dash' %}">
+    <li>Home</li>
+</a>
+<a class="navLink" href="{% url 'dept_dash' %}">
+    <li>View Attendance Requests</li>
+</a>
+<a class="navLink" href="{% url 'dept_dash' %}">
+    <li>View Students</li>
+</a>
+<a class="navLink" href="{%url 'logout'%}">
+    <li>Logout</li>
+</a>
+{%endblock%}
+{%block content%}
+<section>
+    <h2>Enter Details</h2>
 
-<p>
-    You were redirected here because your details are not in the system yet.
-    Please enter the required details
-</p>
+    <p>
+        You were redirected here because your details are not in the system yet.
+        Please enter the required details
+    </p>
 
-<form method="post">
-    {%csrf_token%}
-    {%for field in form%}
-    <div class="fieldWrapper">
-        {{field.label}}
-        {{field}}
-    </div>
-    {%endfor%}
+    <form method="post">
+        {%csrf_token%}
+        {%for field in form%}
+        <div class="fieldWrapper">
+            {{field.label}}
+            {{field}}
+        </div>
+        {%endfor%}
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</section>
+{%endblock%}

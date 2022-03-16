@@ -4,6 +4,10 @@
     grid-template-columns: 50% 50%;
 }
 
+.img-part{
+    text-align: center;
+}
+
 .img-part img{
     width: 50%;
 }

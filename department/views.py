@@ -60,9 +60,9 @@ class viewStudents(View):
         curr_user  = request.user
         dept_object = DepartmentMember.objects.get(user = curr_user)
         students = Students.objects.filter(dept = dept_object.dept)
-        print(students)
+        #print(students)
         clubs = ClubMemberships.objects.filter(member__in  = students)
-        print(clubs)
+        #print(clubs)
         #data = students | clubs
         #print(data)
         return(render(request, 'department/viewstudents.html', {'clubs' : clubs}))

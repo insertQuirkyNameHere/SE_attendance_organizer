@@ -1,37 +1,43 @@
 {% extends '../base.html' %}
 
-{%block intStylesheets%} 
-<link href="/static/css/dashboard.css" rel="stylesheet" type="text/css"> 
+{%block intStylesheets%}
+<link href="/static/css/dashboard.css" rel="stylesheet" type="text/css">
 {%endblock%}
 {%block title%}Attendance Organizer| Dashboard {%endblock%}
 
 {%block navLinks%}
-<a class="navLink" href="#"><li>Home</li></a>
-<a class="navLink" href="{%url 'stu_requests'%}"><li>View Attendance Requests</li></a>
-<a class="navLink" href="{%url 'logout'%}"><li>Logout</li></a>
+<a class="navLink" href="#">
+    <li>Home</li>
+</a>
+<a class="navLink" href="{%url 'stu_requests'%}">
+    <li>View Attendance Requests</li>
+</a>
+<a class="navLink" href="{%url 'logout'%}">
+    <li>Logout</li>
+</a>
 {%endblock%}
 
 {% block content %}
 <section>
-<h2>Student Dashboard</h2>
+    <h2>Student Dashboard</h2>
 
-<div class="dashboard-section">
-<div class="img-part">
-<img src="/static/img/dashboard_img.png" alt="dashboard-icon">
-</div>
+    <div class="dashboard-section">
+        <div class="img-part">
+            <img src="/static/img/dashboard_img.png" alt="dashboard-icon">
+        </div>
 
-<div class="content-part">
-<h3>Your clubs</h3>
-{%if clubs%}
-<ul>
-    {%for club in clubs%}
-    <li>{{club.club}}</li>
-    {%endfor%}
-</ul>
-{%else%}
-<p>You are not a part of any club at this moment</p>
-{%endif%}
-{% endblock %}
-</div>
-</div>
+        <div class="content-part">
+            <h3>Your clubs</h3>
+            {%if clubs%}
+            <ul>
+                {%for club in clubs%}
+                <li>{{club.club}}</li>
+                {%endfor%}
+            </ul>
+            {%else%}
+            <p>You are not a part of any club at this moment</p>
+            {%endif%}
+            {% endblock %}
+        </div>
+    </div>
 </section>

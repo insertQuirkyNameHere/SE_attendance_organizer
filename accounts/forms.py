@@ -8,7 +8,6 @@ User = get_user_model()
 class RegisterForm(forms.ModelForm):
     CHOICES=[('1','Student'),
          ('2','Club President'),
-         ('3','Faculty'),
          ('4','Department')]
 
     role = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect,label="Role")
@@ -16,7 +15,7 @@ class RegisterForm(forms.ModelForm):
 
 
     email       = forms.EmailField(max_length=255, required=True, widget=forms.EmailInput(attrs={'placeholder':'Email','style': 'width:100%', 'class':'input_field'}))
-    name = forms.CharField(required=True, widget = forms.TextInput(attrs={'placeholder':'Full Name','style': 'width:100%', 'class':'input_field'}))
+    name        = forms.CharField(required=True, widget = forms.TextInput(attrs={'placeholder':'Full Name','style': 'width:100%', 'class':'input_field'}))
     password    = forms.CharField(max_length=255, required=True, widget=forms.PasswordInput(attrs={'placeholder' : 'Password','style': 'width:100%', 'class':'input_field'}))
     password2   = forms.CharField(label="Confirm Password",max_length=255, required=True, widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password','style': 'width:100%', 'class':'input_field'}))
 

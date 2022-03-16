@@ -59,6 +59,8 @@ class LoginView(views.View):
                     return redirect(reverse("stu_dash"))
                 elif user.is_dept:
                     return redirect(reverse("dept_dash"))
+                else:
+                    return redirect(reverse("dept_dash"))
             else:
                 if UserModel.objects.filter(email=email).exists():
                     messages.error(request, 'Incorrect username or password')

@@ -1,37 +1,41 @@
-{% extends "header.html" %}
+{% extends '../base.html' %}
+{%block intStylesheets%}
+<link href="/static/css/dashboard.css" rel="stylesheet" type="text/css">
+{%endblock%}
+{%block title%}Attendance Organizer| Dashboard {%endblock%}
+{%block navLinks%}
+<a class="navLink" href="{% url 'dept_dash' %}">
+    <li>Home</li>
+</a>
+<a class="navLink" href="{% url 'attendance_requests' %}">
+    <li>View Attendance Requests</li>
+</a>
+<a class="navLink" href="{% url 'view_students' %}">
+    <li>View Students</li>
+</a>
+<a class="navLink" href="{%url 'logout'%}">
+    <li>Logout</li>
+</a>
+{%endblock%}
 
-{%block content%}
-{% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
-<div class="container-fluid top-nav">
-    <div class="row py-5 justify-content-center">
-        <div class="col-3 text-center">
-            <a href="{% url 'dept_dash' %}"><button class="btn btn-special">Home</button></a>
+{%block content %}
+<section>
+    <h2>Department Dashboard</h2>
+    <div class="dashboard-section">
+        <div class="img-part">
+            <img src="/static/img/dashboard_img.png" alt="dashboard-icon">
         </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'attendance_requests' %}"><button class="btn btn-special">View attendance requests</button></a>
-        </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'view_students' %}"><button class="btn btn-special">View Students</button></a>
-        </div>
-        <div class="col-3 text-center">
-            <a href="{% url 'logout' %}"><button class="btn btn-special">Logout</button></a>
+        <div class="content-part">
+            <h3>You are a member of the following departments:</h3>
+            <ul>
+                <li>{{department}}</li>
+            </ul>
+            <div class="center-text">
+                <a href="{% url 'attendance_requests' %}"><button class="btn btn-primary">View attendance
+                        requests</button></a>
+                <a href="{% url 'view_students' %}"><button class="btn btn-primary">View Students</button></a>
+            </div>
         </div>
     </div>
-</div>
-<div class="text-center">
-<h1>Department Dashboard</h1>
-<h2>Welcome {{user.name}}</h2>
-
-<h3>You are a member of the following department</h3>
-    <h4>{{department}}</h4>
-
-<a href="{% url 'attendance_requests' %}"><button class="btn btn-primary">View attendance requests</button></a>
-<a href="{% url 'view_students' %}"><button class="btn btn-primary">View Students</button></a>
-</div>
+</section>
 {%endblock%}
