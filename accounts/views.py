@@ -6,7 +6,7 @@ from accounts import forms
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 # Create your views here.
 UserModel = get_user_model()
 
@@ -105,4 +105,19 @@ class LandingPage(views.View):
         else:
             messages.error(request, 'email did not pass validation')
             return render(request, 'landing.html', {'form': form})
+
+class DeleteUsers(views.View):
+    def get(self, request):
+        user_model = get_user_model()
+        context = {}
+        context['users'] = user_model.objects.all()
+        return(render(request, 'deleteUsers.html', context))
+
+    def post(self, request):
+        user_id = self.request.POST.get('user')
+        user_model = get_user_model()
+        user_model.objects.get(id=user_id).delete()
+        return redirect(reverse('del_user'))
+        
+
 

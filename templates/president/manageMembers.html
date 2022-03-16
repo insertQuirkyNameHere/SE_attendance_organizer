@@ -19,19 +19,21 @@
     <h3>{{club}}</h3>
 
     <section>
-    <form method="post">
-        <h3 style="display: inline-block;">Delete member:</h3>
-        {%csrf_token%}
-        <button type="submit" class="btn btn-danger ml-4" name="del" style="display: inline-block;">Delete Member</button>
-    </form>
+        <form method="post">
+            <h3 style="display: inline-block;">Delete member:</h3>
+            {%csrf_token%}
+            <button type="submit" class="btn btn-danger ml-4" name="del" style="display: inline-block;">Delete
+                Member</button>
+        </form>
     </section>
 
     <section>
-        <h3>Request Attendance</h3>
-        {%csrf_token%}
-        <input type="date" name="date" class="ml-4">
-        <button type="submit" class="btn btn-success" name="req_att">Request</button>
-    </form>
+        <form method="post">
+            <h3>Request Attendance</h3>
+            {%csrf_token%}
+            <input type="date" name="date" class="ml-4">
+            <button type="submit" class="btn btn-success" name="req_att">Request</button>
+        </form>
     </section>
 </section>
 {% endblock %}
